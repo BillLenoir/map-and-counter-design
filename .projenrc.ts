@@ -1,5 +1,5 @@
-import { javascript, typescript } from "projen";
 import { monorepo } from "@aws/pdk";
+import { javascript, typescript } from "projen";
 
 const project = new monorepo.MonorepoTsProject({
   devDeps: ["@aws/pdk"],
@@ -9,6 +9,7 @@ const project = new monorepo.MonorepoTsProject({
   packageManager: javascript.NodePackageManager.NPM,
   prettier: true,
   projenrcTs: true,
+  gitignore: ["map/output-files/", "map/src/*.svg"],
 });
 
 const mapApp = new typescript.TypeScriptAppProject({

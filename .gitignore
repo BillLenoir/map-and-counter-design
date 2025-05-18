@@ -30,6 +30,8 @@ jspm_packages/
 .yarn-integrity
 .cache
 .tmp
+map/output-files/
+map/src/*.svg
 !/.github/workflows/build.yml
 !/.mergify.yml
 !/.github/workflows/upgrade.yml
