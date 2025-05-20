@@ -28,6 +28,9 @@
     "ts-jest": "^29.3.2",
     "typescript": "^5.8.3"
   },
+  "dependencies": {
+    "yargs": "^17.7.2"
+  },
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"

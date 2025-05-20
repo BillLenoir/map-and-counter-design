@@ -2,16 +2,16 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const dpi = 96;
-const flatSpacingIn = 1;
-const hexWidth = flatSpacingIn * dpi; // 1 inch point-to-point
+const hexSize = 1;
+const hexWidth = hexSize * dpi; // 1 inch point-to-point
 const hexRadius = hexWidth / 2;
 const hexHeight = Math.sqrt(3) * hexRadius; // flat-to-flat vertical height
-
 const cols = 25;
 const rows = 28;
 
 function generateHexGridSVG(): string {
   const hexSides: [number, number, number, number][] = [];
+  const hexNumbering: [number, number, string][] = [];
 
   let svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">\n';
 
@@ -33,6 +33,10 @@ function generateHexGridSVG(): string {
         const [x2, y2] = corners[(i + 1) % 6];
         hexSides.push([x1, y1, x2, y2]);
       }
+      let hexNumber = row < 10 ? `0${row}` : `${row}`;
+      hexNumber += col < 10 ? `0${col}` : `${col}`;
+
+      hexNumbering.push([cx, cy+5, hexNumber]);
     }
   }
   svg += '  </g>\n';

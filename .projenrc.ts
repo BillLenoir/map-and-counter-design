@@ -12,11 +12,11 @@ const project = new monorepo.MonorepoTsProject({
   gitignore: ["map/output-files/", "map/src/*.svg"],
 });
 
-const mapApp = new typescript.TypeScriptAppProject({
+const gameArtifactGeneratorApp = new typescript.TypeScriptAppProject({
   parent: project,
-  name: "map-app",
+  name: "game-artifact-generator",
   defaultReleaseBranch: "main",
-  outdir: "map",
+  outdir: "app",
   packageManager: project.package.packageManager,
   tsconfig: {
     compilerOptions: {
@@ -49,6 +49,7 @@ const mapApp = new typescript.TypeScriptAppProject({
     ]),
   },
 });
-mapApp.addDevDeps("@tsconfig/node18");
+gameArtifactGeneratorApp.addDevDeps("@tsconfig/node18");
+gameArtifactGeneratorApp.addDeps("yargs");
 
 project.synth();

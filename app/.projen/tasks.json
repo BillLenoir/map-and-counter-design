@@ -108,13 +108,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@tsconfig/node18,@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,ts-jest,typescript"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@tsconfig/node18,@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,ts-jest,typescript,yargs"
         },
         {
           "exec": "npm install"
         },
         {
-          "exec": "npm update @tsconfig/node18 @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit ts-jest typescript"
+          "exec": "npm update @tsconfig/node18 @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit ts-jest typescript yargs"
         },
         {
           "exec": "npx projen"
