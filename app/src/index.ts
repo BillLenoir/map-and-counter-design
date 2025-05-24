@@ -1,33 +1,20 @@
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
+import { HexMap } from './generate-hexmap';
+import { argv } from './utils/args';
+import { saveToFile } from './utils/save-to-file';
 
-const argv = yargs(hideBin(process.argv))
-  .option('generate', {
-    type: 'string',
-    default: 'map',
-    describe: 'What to generate, map or counters?',
-  })
-  .option('cols', {
-    type: 'number',
-    default: 25,
-    describe: 'Number of hexes horizontally',
-  })
-  .option('rows', {
-    type: 'number',
-    default: 28,
-    describe: 'Number of hexes vertically',
-  })
-  .option('dpi', {
-    type: 'number',
-    default: 96,
-    describe: 'Dots per inch',
-  })
-  .option('hexSize', {
-    type: 'number',
-    default: 1,
-    describe: 'Number of inches between parallel sides',
-  })
-  .parse();
+switch (argv.generate) {
+  case 'map':
+    const hexMap = new HexMap({
+      cols: argv.cols,
+      rows: argv.rows,
+      dpi: argv.dpi,
+      hexSize: argv.hexSize,
+      hexColor: argv.hexColor,
+    });
+    saveToFile(hexMap.generateHexMapSvg());
+    break;
 
-
-console.log(JSON.stringify(argv));
+  default:
+    console.error(`❌ Unsupported generator: ${argv.generate}`);
+    process.exit(1);
+}

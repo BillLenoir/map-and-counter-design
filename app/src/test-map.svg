@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   sodipodi:docname="test-map.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="6.7229728"
+     inkscape:cx="108.65729"
+     inkscape:cy="88.800002"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1" />
+  <g
+     inkscape:label="Hex Fill"
+     inkscape:groupmode="layer"
+     id="g1">
+    <polygon
+       points="1.270000,26.670000 12.268523,20.320000 23.267045,26.670000 23.267045,39.370000 12.268523,45.720000 1.270000,39.370000"
+       style="stroke:none;fill:#ffffff;fill-opacity:1;stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="hexfill_10_1" />
+    <polygon
+       points="23.267045,26.670000 34.265568,20.320000 45.264091,26.670000 45.264091,39.370000 34.265568,45.720000 23.267045,39.370000"
+       style="stroke:none;fill:#ffffff;fill-opacity:1;stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="hexfill_10_2" />
+    <polygon
+       points="12.268523,7.620000 23.267045,1.270000 34.265568,7.620000 34.265568,20.320000 23.267045,26.670000 12.268523,20.320000"
+       style="stroke:none;fill:#ffffff;fill-opacity:1;stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="hexfill_11_1" />
+    <polygon
+       points="34.265568,7.620000 45.264091,1.270000 56.262613,7.620000 56.262613,20.320000 45.264091,26.670000 34.265568,20.320000"
+       style="stroke:none;fill:#ffffff;fill-opacity:1;stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="hexfill_11_2" />
+  </g>
+  <g
+     inkscape:label="Hex Grid"
+     inkscape:groupmode="layer"
+     id="g19">
+    <line
+       x1="1.2700000000000002"
+       y1="39.37"
+       x2="1.2700000000000002"
+       y2="26.669999999999998"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line1" />
+    <line
+       x1="1.2700000000000002"
+       y1="39.37"
+       x2="12.268522628062373"
+       y2="45.72"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line2" />
+    <line
+       x1="1.2700000000000002"
+       y1="26.669999999999998"
+       x2="12.268522628062373"
+       y2="20.319999999999997"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line3" />
+    <line
+       x1="12.268522628062373"
+       y1="45.72"
+       x2="23.267045256124746"
+       y2="39.37"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line4" />
+    <line
+       x1="23.267045256124742"
+       y1="39.37"
+       x2="23.267045256124742"
+       y2="26.669999999999998"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line5" />
+    <line
+       x1="23.267045256124742"
+       y1="39.37"
+       x2="34.26556788418712"
+       y2="45.72"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line6" />
+    <line
+       x1="34.26556788418712"
+       y1="45.72"
+       x2="45.264090512249496"
+       y2="39.37"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line7" />
+    <line
+       x1="45.264090512249496"
+       y1="39.37"
+       x2="45.264090512249496"
+       y2="26.669999999999998"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line8" />
+    <line
+       x1="12.268522628062373"
+       y1="20.319999999999997"
+       x2="12.268522628062373"
+       y2="7.619999999999995"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line9" />
+    <line
+       x1="12.268522628062373"
+       y1="20.319999999999997"
+       x2="23.267045256124746"
+       y2="26.669999999999995"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line10" />
+    <line
+       x1="23.267045256124746"
+       y1="26.669999999999995"
+       x2="34.26556788418712"
+       y2="20.319999999999997"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line11" />
+    <line
+       x1="34.26556788418712"
+       y1="20.319999999999997"
+       x2="34.26556788418712"
+       y2="7.619999999999995"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line12" />
+    <line
+       x1="34.26556788418712"
+       y1="20.319999999999997"
+       x2="45.264090512249496"
+       y2="26.669999999999995"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line13" />
+    <line
+       x1="45.264090512249496"
+       y1="26.669999999999995"
+       x2="56.26261314031187"
+       y2="20.319999999999997"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line14" />
+    <line
+       x1="45.264090512249496"
+       y1="1.2699999999999931"
+       x2="56.26261314031187"
+       y2="7.619999999999995"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line15" />
+    <line
+       x1="56.26261314031186"
+       y1="20.319999999999997"
+       x2="56.26261314031186"
+       y2="7.619999999999995"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line16" />
+    <line
+       x1="12.268522628062373"
+       y1="7.620000000000002"
+       x2="23.267045256124746"
+       y2="1.2700000000000002"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line17" />
+    <line
+       x1="23.267045256124742"
+       y1="1.2700000000000002"
+       x2="34.26556788418712"
+       y2="7.620000000000002"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line18" />
+    <line
+       x1="34.26556788418712"
+       y1="7.620000000000002"
+       x2="45.264090512249496"
+       y2="1.2700000000000002"
+       style="stroke:#000000; stroke-width:2.5400000000000005;stroke-linecap:round"
+       id="line19" />
+  </g>
+  <g
+     inkscape:label="Hex Coordinates"
+     inkscape:groupmode="layer"
+     id="g22">
+    <text
+       x="12.268522628062373"
+       y="41.26889197104678"
+       style="text-align:center;text-anchor:middle;font-size:2.000000pt"
+       id="text19">01.11</text>
+    <text
+       x="34.26556788418712"
+       y="41.26889197104678"
+       style="text-align:center;text-anchor:middle;font-size:2.000000pt"
+       id="text20">02.11</text>
+    <text
+       x="23.267045256124746"
+       y="22.218891971046776"
+       style="text-align:center;text-anchor:middle;font-size:2.000000pt"
+       id="text21">01.10</text>
+    <text x="45.264090512249496" y="22.218891971046776" style="text-align:center;text-anchor:middle;font-size:2.000000pt" id="text22">02.10</text>
+  </g>
+</svg>

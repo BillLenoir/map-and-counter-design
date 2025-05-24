@@ -1,84 +1,122 @@
-import * as fs from 'fs';
-import * as path from 'path';
+interface HexMapOptions {
+  cols: number;
+  rows: number;
+  dpi: number;
+  hexSize: number;
+  hexColor: string;
+}
+export class HexMap {
+  cols: number;
+  rows: number;
+  dpi: number;
+  hexSize: number;
+  hexColor: string;
+  hexWidth: number;
+  hexRadius: number;
+  hexHeight: number;
+  hexSides: [number, number, number, number][] = [];
+  hexNumbering: [number, number, string][] = [];
 
-const dpi = 96;
-const hexSize = 1;
-const hexWidth = hexSize * dpi; // 1 inch point-to-point
-const hexRadius = hexWidth / 2;
-const hexHeight = Math.sqrt(3) * hexRadius; // flat-to-flat vertical height
-const cols = 25;
-const rows = 28;
+  constructor(hexMapOptions: HexMapOptions) {
+    this.cols = hexMapOptions.cols;
+    this.rows = hexMapOptions.rows;
+    this.dpi = hexMapOptions.dpi;
+    this.hexSize = hexMapOptions.hexSize;
+    this.hexColor = hexMapOptions.hexColor;
+    this.hexWidth = this.hexSize * this.dpi; // 1 inch point-to-point
+    this.hexRadius = this.hexWidth / 2;
+    this.hexHeight = Math.sqrt(3) * this.hexRadius; // flat-to-flat vertical height
+    this.hexSides = [];
+    this.hexNumbering = [];
+  }
 
-function generateHexGridSVG(): string {
-  const hexSides: [number, number, number, number][] = [];
-  const hexNumbering: [number, number, string][] = [];
+  generateHexMapSvg(): string {
+    let svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">\n  id="hexMap"';
 
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">\n';
+    svg += this.buildHexLayer();
 
-  // Layer 1: Hexes
-  svg += '  <g inkscape:groupmode="layer" inkscape:label="Hexes">\n';
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const { x: cx, y: cy } = hexCenter(col, row);
-      const corners = hexCorners(cx, cy);
-      const hexId = `hex_${(row + 1).toString().padStart(2, '0')}_${(col + 1).toString().padStart(2, '0')}`;
-      const pathData = corners.map(([x, y], i) =>
-        `${i === 0 ? 'M' : 'L'} ${x.toFixed(2)},${y.toFixed(2)}`,
-      ).join(' ') + ' Z';
+    svg += this.buildHexSideLayer();
 
-      svg += `    <path id="${hexId}" d="${pathData}" fill="orange" stroke="none" />\n`;
+    svg += this.buildHexNumberLayer();
 
-      for (let i = 0; i < 6; i++) {
-        const [x1, y1] = corners[i];
-        const [x2, y2] = corners[(i + 1) % 6];
-        hexSides.push([x1, y1, x2, y2]);
+    svg += '</svg>\n';
+
+    return svg;
+  }
+
+  private buildHexLayer() {
+    let hexLayerSvg = '  <g inkscape:groupmode="layer" inkscape:label="Hexes" id="hexLayer">\n';
+    for (let row = 0; row < this.rows; row++) {
+      for (let col = 0; col < this.cols; col++) {
+        hexLayerSvg += this.buildHex(col, row);
       }
-      let hexNumber = row < 10 ? `0${row}` : `${row}`;
-      hexNumber += col < 10 ? `0${col}` : `${col}`;
-
-      hexNumbering.push([cx, cy+5, hexNumber]);
     }
+    hexLayerSvg += '  </g>\n';
+    return hexLayerSvg;
   }
-  svg += '  </g>\n';
 
-  // Layer 2: Hex Sides
-  svg += '  <g inkscape:groupmode="layer" inkscape:label="Hex sides">\n';
-  hexSides.forEach(([x1, y1, x2, y2]) => {
-    svg += `    <line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#ccc" stroke-width="0.5"/>\n`;
-  });
-  svg += '  </g>\n</svg>\n';
+  private buildHex(col: number, row: number) {
+    const { x: hexCenterX, y: hexCenterY } = this.calculateHexCenter(col, row);
+    const corners = this.calculateHexCorners(hexCenterX, hexCenterY);
+    const paddedRowNumber = (row + 1).toString().padStart(2, '0');
+    const paddedColNumber = (col + 1).toString().padStart(2, '0');
+    const hexId = `hex_${paddedRowNumber}_${paddedColNumber}`;
+    const pathData = corners.map(([x, y], i) => `${i === 0 ? 'M' : 'L'} ${x.toFixed(2)},${y.toFixed(2)}`,
+    ).join(' ') + ' Z';
 
-  return svg;
-}
+    const hexSvg = `    <path id="${hexId}" d="${pathData}" fill="${this.hexColor}" stroke="none" />\n`;
 
-function hexCenter(col: number, row: number): { x: number; y: number } {
-  const x = col * hexWidth * 0.75 + hexRadius;
-  const y = row * hexHeight + (col % 2 === 1 ? hexHeight / 2 : 0);
-  return { x, y };
-}
+    for (let i = 0; i < 6; i++) {
+      this.buildHexCorners(corners, i);
+    }
 
-function hexCorners(cx: number, cy: number): [number, number][] {
-  const corners: [number, number][] = [];
-  for (let i = 0; i < 6; i++) {
-    const angleDeg = 60 * i;
-    const angleRad = (Math.PI / 180) * angleDeg;
-    const x = cx + hexRadius * Math.cos(angleRad);
-    const y = cy + hexRadius * Math.sin(angleRad);
-    corners.push([x, y]);
+    const printableHexNumber = `${paddedRowNumber}${paddedColNumber}`;
+    this.hexNumbering.push([hexCenterX, hexCenterY + 5, printableHexNumber]);
+
+    return hexSvg;
   }
-  return corners;
-}
 
-function saveSVGToFile(svgContent: string, filename: string = 'hex_map.svg') {
-  const outputPath = path.resolve(__dirname, filename);
-  try {
-    fs.writeFileSync(outputPath, svgContent, 'utf-8');
-  } catch (error) {
-    throw new Error(`Problem writing SVG file: ${error}`);
+  private buildHexCorners(corners: [number, number][], i: number) {
+    const [x1, y1] = corners[i];
+    const [x2, y2] = corners[(i + 1) % 6];
+    this.hexSides.push([x1, y1, x2, y2]);
   }
-  console.log(`✅ SVG saved to ${outputPath}`);
-}
 
-// Generate and save
-const svg = generateHexGridSVG();
-saveSVGToFile(svg);
+  private calculateHexCenter(col: number, row: number): { x: number; y: number } {
+    const x = col * this.hexWidth * 0.75 + this.hexRadius;
+    const y = row * this.hexHeight + (col % 2 === 1 ? this.hexHeight / 2 : 0);
+    return { x, y };
+  }
+
+  private calculateHexCorners(cx: number, cy: number): [number, number][] {
+    const corners: [number, number][] = [];
+    for (let i = 0; i < 6; i++) {
+      const angleDeg = 60 * i;
+      const angleRad = (Math.PI / 180) * angleDeg;
+      const x = cx + this.hexRadius * Math.cos(angleRad);
+      const y = cy + this.hexRadius * Math.sin(angleRad);
+      corners.push([x, y]);
+    }
+    return corners;
+  }
+
+  private buildHexSideLayer() {
+    let hexSideLayerSvg = '  <g inkscape:groupmode="layer" inkscape:label="Hex sides" id="hexSideLayer">\n';
+    this.hexSides.forEach(([x1, y1, x2, y2]) => {
+      hexSideLayerSvg += `    <line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#ccc" stroke-width="0.5"/>\n`;
+    });
+    hexSideLayerSvg += '  </g>\n';
+    return hexSideLayerSvg;
+  }
+
+  private buildHexNumberLayer() {
+    let hexNumberSvg = '  <g inkscape:groupmode="layer" inkscape:label="Hex Numbers" id="hexNumberLayer">\n';
+    this.hexNumbering.forEach(([x, y, hexNumber]) => {
+      const adjustedYCoordinate = y - this.hexRadius + 12;
+      hexNumberSvg += `    <text x="${x}" y="${adjustedYCoordinate}" style="text-align:center;text-anchor:middle;font-size:7.5pt" id="hex-number-${hexNumber}">${hexNumber}</text>\n`;
+    });
+    hexNumberSvg += '  </g>\n';
+    return hexNumberSvg;
+  }
+
+}
