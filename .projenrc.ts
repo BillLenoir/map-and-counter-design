@@ -9,7 +9,7 @@ const project = new monorepo.MonorepoTsProject({
   packageManager: javascript.NodePackageManager.NPM,
   prettier: true,
   projenrcTs: true,
-  gitignore: ["app/output-files/", "app/src/*.svg"],
+  gitignore: ["app/output-files/", "app/src/*.svg", ".claude/"],
 });
 
 const gameArtifactGeneratorApp = new typescript.TypeScriptAppProject({
