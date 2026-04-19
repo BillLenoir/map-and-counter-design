@@ -19,12 +19,12 @@ export const argv = yargs(hideBin(process.argv))
   })
   .option('cols', {
     type: 'number',
-    default: 25,
+    default: 28,
     describe: 'Number of hexes horizontally',
   })
   .option('rows', {
     type: 'number',
-    default: 28,
+    default: 25,
     describe: 'Number of hexes vertically',
   })
   .option('dpi', {

@@ -1,5 +1,5 @@
 {
-  "name": "map-app",
+  "name": "game-artifact-generator",
   "scripts": {
     "build": "npx projen build",
     "compile": "npx projen compile",

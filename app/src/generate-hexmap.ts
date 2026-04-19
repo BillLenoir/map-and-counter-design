@@ -6,16 +6,17 @@ interface HexMapOptions {
   hexColor: string;
 }
 export class HexMap {
-  cols: number;
-  rows: number;
-  dpi: number;
-  hexSize: number;
-  hexColor: string;
-  hexWidth: number;
-  hexRadius: number;
-  hexHeight: number;
-  hexSides: [number, number, number, number][] = [];
-  hexNumbering: [number, number, string][] = [];
+  private cols: number;
+  private rows: number;
+  private dpi: number;
+  private hexSize: number;
+  private hexColor: string;
+  private hexWidth: number;
+  private hexRadius: number;
+  private hexHeight: number;
+  private uniqueHexSideTracker = new Set<string>();
+  private hexSides: [number, number, number, number][] = [];
+  private hexNumbering: [number, number, string][] = [];
 
   constructor(hexMapOptions: HexMapOptions) {
     this.cols = hexMapOptions.cols;
@@ -26,6 +27,7 @@ export class HexMap {
     this.hexWidth = this.hexSize * this.dpi; // 1 inch point-to-point
     this.hexRadius = this.hexWidth / 2;
     this.hexHeight = Math.sqrt(3) * this.hexRadius; // flat-to-flat vertical height
+    this.uniqueHexSideTracker = new Set();
     this.hexSides = [];
     this.hexNumbering = [];
   }
@@ -55,8 +57,8 @@ export class HexMap {
     return hexLayerSvg;
   }
 
-  private buildHex(col: number, row: number) {
-    const { x: hexCenterX, y: hexCenterY } = this.calculateHexCenter(col, row);
+  private buildHex(row: number, col: number) {
+    const { x: hexCenterX, y: hexCenterY } = this.calculateHexCenter(row, col);
     const corners = this.calculateHexCorners(hexCenterX, hexCenterY);
     const paddedRowNumber = (row + 1).toString().padStart(2, '0');
     const paddedColNumber = (col + 1).toString().padStart(2, '0');
@@ -70,40 +72,57 @@ export class HexMap {
       this.buildHexCorners(corners, i);
     }
 
-    const printableHexNumber = `${paddedRowNumber}${paddedColNumber}`;
+    const printableHexNumber = `${paddedColNumber}${paddedRowNumber}`;
     this.hexNumbering.push([hexCenterX, hexCenterY + 5, printableHexNumber]);
 
     return hexSvg;
   }
 
-  private buildHexCorners(corners: [number, number][], i: number) {
-    const [x1, y1] = corners[i];
-    const [x2, y2] = corners[(i + 1) % 6];
-    this.hexSides.push([x1, y1, x2, y2]);
-  }
-
-  private calculateHexCenter(col: number, row: number): { x: number; y: number } {
+  private calculateHexCenter(row: number, col: number): { x: number; y: number } {
     const x = col * this.hexWidth * 0.75 + this.hexRadius;
     const y = row * this.hexHeight + (col % 2 === 1 ? this.hexHeight / 2 : 0);
     return { x, y };
   }
 
-  private calculateHexCorners(cx: number, cy: number): [number, number][] {
+  private calculateHexCorners(cornerX: number, cornerY: number): [number, number][] {
     const corners: [number, number][] = [];
     for (let i = 0; i < 6; i++) {
       const angleDeg = 60 * i;
       const angleRad = (Math.PI / 180) * angleDeg;
-      const x = cx + this.hexRadius * Math.cos(angleRad);
-      const y = cy + this.hexRadius * Math.sin(angleRad);
+      const x = cornerX + this.hexRadius * Math.cos(angleRad);
+      const y = cornerY + this.hexRadius * Math.sin(angleRad);
       corners.push([x, y]);
     }
     return corners;
   }
 
+  private buildHexCorners(corners: [number, number][], i: number) {
+    const [x1, y1] = corners[i];
+    const [x2, y2] = corners[(i + 1) % 6];
+    this.addHexSideOnlyIfUnique([x1, y1, x2, y2]);
+  }
+
+  private addHexSideOnlyIfUnique(hexSide: [number, number, number, number]) {
+    const key = this.normalizeHexSide(hexSide);
+    if (!this.uniqueHexSideTracker.has(key)) {
+      this.uniqueHexSideTracker.add(key);
+      this.hexSides.push(hexSide);
+    }
+  }
+
+  private normalizeHexSide(line: [number, number, number, number]): string {
+    const [x1, y1, x2, y2] = line;
+    if (x1 < x2 || (x1 === x2 && y1 <= y2)) {
+      return `${x1},${y1},${x2},${y2}`;
+    } else {
+      return `${x2},${y2},${x1},${y1}`;
+    }
+  }
+
   private buildHexSideLayer() {
     let hexSideLayerSvg = '  <g inkscape:groupmode="layer" inkscape:label="Hex sides" id="hexSideLayer">\n';
     this.hexSides.forEach(([x1, y1, x2, y2]) => {
-      hexSideLayerSvg += `    <line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#ccc" stroke-width="0.5"/>\n`;
+      hexSideLayerSvg += `    <line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#999" stroke-width="0.5"/>\n`;
     });
     hexSideLayerSvg += '  </g>\n';
     return hexSideLayerSvg;

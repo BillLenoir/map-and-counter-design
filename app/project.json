@@ -1,89 +1,89 @@
 {
-  "name": "map-app",
-  "root": "map",
+  "name": "game-artifact-generator",
+  "root": "app",
   "targets": {
     "default": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen default",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "pre-compile": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen pre-compile",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "compile": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen compile",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "post-compile": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen post-compile",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen test",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "package": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen package",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen build",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "test:watch": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen test:watch",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "post-upgrade": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen post-upgrade",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "upgrade": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen upgrade",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "watch": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen watch",
-        "cwd": "map"
+        "cwd": "app"
       }
     },
     "eslint": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx projen eslint",
-        "cwd": "map"
+        "cwd": "app"
       }
     }
   },
