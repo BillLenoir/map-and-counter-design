@@ -26,9 +26,9 @@ export class HexMap {
     this.dpi = hexMapOptions.dpi;
     this.hexSize = hexMapOptions.hexSize;
     this.hexColor = hexMapOptions.hexColor;
-    this.hexWidth = this.hexSize * this.dpi; // 1 inch point-to-point
-    this.hexRadius = this.hexWidth / 2;
-    this.hexHeight = Math.sqrt(3) * this.hexRadius;
+    this.hexHeight = this.hexSize * this.dpi;
+    this.hexRadius = this.hexHeight / Math.sqrt(3);
+    this.hexWidth = 2 * this.hexRadius;
   }
 
   generateHexMapSvg(): string {
