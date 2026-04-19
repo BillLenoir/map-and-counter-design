@@ -13,7 +13,7 @@ interface CliOptions {
 export const argv = yargs(hideBin(process.argv))
   .option('generate', {
     type: 'string',
-    choices: ['map', 'counters'],
+    choices: ['map'],
     default: 'map',
     describe: 'What to generate, map or counters?',
   })

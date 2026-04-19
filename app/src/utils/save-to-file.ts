@@ -4,7 +4,7 @@ import * as path from 'path';
 export function saveToFile(svgContent: string, filename: string = 'hex_map.svg') {
   // Saving it to a directory relative to where the script is run,
   //   which should always be the project root.
-  const outputDir = path.resolve(process.cwd(), './app/output-files');
+  const outputDir = path.resolve(__dirname, '../../output-files');
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
@@ -15,5 +15,5 @@ export function saveToFile(svgContent: string, filename: string = 'hex_map.svg')
   } catch (error) {
     throw new Error(`Problem writing SVG file: ${error}`);
   }
-  console.log(`✅ SVG saved to ${outputDir}`);
+  console.log(`✅ SVG saved to ${outputPath}`);
 }

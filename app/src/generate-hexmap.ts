@@ -1,3 +1,5 @@
+import { HEX_NUMBER_OFFSET, HEX_NUMBER_Y_OFFSET } from './utils/constants';
+
 interface HexMapOptions {
   cols: number;
   rows: number;
@@ -26,14 +28,11 @@ export class HexMap {
     this.hexColor = hexMapOptions.hexColor;
     this.hexWidth = this.hexSize * this.dpi; // 1 inch point-to-point
     this.hexRadius = this.hexWidth / 2;
-    this.hexHeight = Math.sqrt(3) * this.hexRadius; // flat-to-flat vertical height
-    this.uniqueHexSideTracker = new Set();
-    this.hexSides = [];
-    this.hexNumbering = [];
+    this.hexHeight = Math.sqrt(3) * this.hexRadius;
   }
 
   generateHexMapSvg(): string {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">\n  id="hexMap"';
+    let svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"\n  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"\n  id="hexMap">';
 
     svg += this.buildHexLayer();
 
@@ -50,16 +49,16 @@ export class HexMap {
     let hexLayerSvg = '  <g inkscape:groupmode="layer" inkscape:label="Hexes" id="hexLayer">\n';
     for (let row = 0; row < this.rows; row++) {
       for (let col = 0; col < this.cols; col++) {
-        hexLayerSvg += this.buildHex(col, row);
+        hexLayerSvg += this.buildHex({ col, row });
       }
     }
     hexLayerSvg += '  </g>\n';
     return hexLayerSvg;
   }
 
-  private buildHex(row: number, col: number) {
-    const { x: hexCenterX, y: hexCenterY } = this.calculateHexCenter(row, col);
-    const corners = this.calculateHexCorners(hexCenterX, hexCenterY);
+  private buildHex({ row, col }: { row: number; col: number }) {
+    const { x: hexCenterX, y: hexCenterY } = this.calculateHexCenter({ row, col });
+    const corners = this.calculateHexCorners({ hexCenterX, hexCenterY });
     const paddedRowNumber = (row + 1).toString().padStart(2, '0');
     const paddedColNumber = (col + 1).toString().padStart(2, '0');
     const hexId = `hex_${paddedRowNumber}_${paddedColNumber}`;
@@ -73,24 +72,24 @@ export class HexMap {
     }
 
     const printableHexNumber = `${paddedColNumber}${paddedRowNumber}`;
-    this.hexNumbering.push([hexCenterX, hexCenterY + 5, printableHexNumber]);
+    this.hexNumbering.push([hexCenterX, hexCenterY + HEX_NUMBER_Y_OFFSET, printableHexNumber]);
 
     return hexSvg;
   }
 
-  private calculateHexCenter(row: number, col: number): { x: number; y: number } {
+  private calculateHexCenter({ row, col }: { row: number; col: number }): { x: number; y: number } {
     const x = col * this.hexWidth * 0.75 + this.hexRadius;
     const y = row * this.hexHeight + (col % 2 === 1 ? this.hexHeight / 2 : 0);
     return { x, y };
   }
 
-  private calculateHexCorners(cornerX: number, cornerY: number): [number, number][] {
+  private calculateHexCorners({ hexCenterX, hexCenterY }: { hexCenterX: number; hexCenterY: number }): [number, number][] {
     const corners: [number, number][] = [];
     for (let i = 0; i < 6; i++) {
       const angleDeg = 60 * i;
       const angleRad = (Math.PI / 180) * angleDeg;
-      const x = cornerX + this.hexRadius * Math.cos(angleRad);
-      const y = cornerY + this.hexRadius * Math.sin(angleRad);
+      const x = hexCenterX + this.hexRadius * Math.cos(angleRad);
+      const y = hexCenterY + this.hexRadius * Math.sin(angleRad);
       corners.push([x, y]);
     }
     return corners;
@@ -131,7 +130,7 @@ export class HexMap {
   private buildHexNumberLayer() {
     let hexNumberSvg = '  <g inkscape:groupmode="layer" inkscape:label="Hex Numbers" id="hexNumberLayer">\n';
     this.hexNumbering.forEach(([x, y, hexNumber]) => {
-      const adjustedYCoordinate = y - this.hexRadius + 12;
+      const adjustedYCoordinate = y - this.hexRadius + HEX_NUMBER_OFFSET;
       hexNumberSvg += `    <text x="${x}" y="${adjustedYCoordinate}" style="text-align:center;text-anchor:middle;font-size:7.5pt" id="hex-number-${hexNumber}">${hexNumber}</text>\n`;
     });
     hexNumberSvg += '  </g>\n';
