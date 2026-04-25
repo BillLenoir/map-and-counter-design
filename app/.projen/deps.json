@@ -1,11 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "@stylistic/eslint-plugin",
-      "version": "^2",
-      "type": "build"
-    },
-    {
       "name": "@tsconfig/node18",
       "type": "build"
     },
@@ -15,16 +10,17 @@
     },
     {
       "name": "@types/node",
+      "version": "^18",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "version": "^8",
+      "version": "^7",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
-      "version": "^8",
+      "version": "^7",
       "type": "build"
     },
     {
@@ -37,7 +33,7 @@
     },
     {
       "name": "eslint",
-      "version": "^9",
+      "version": "^8",
       "type": "build"
     },
     {
@@ -46,7 +42,7 @@
     },
     {
       "name": "jest-junit",
-      "version": "^16",
+      "version": "^15",
       "type": "build"
     },
     {
