@@ -49,7 +49,7 @@ const gameArtifactGeneratorApp = new typescript.TypeScriptAppProject({
     ]),
   },
 });
-gameArtifactGeneratorApp.addDevDeps("@tsconfig/node18");
+gameArtifactGeneratorApp.addDevDeps("@tsconfig/node18", "@types/jest");
 gameArtifactGeneratorApp.addDeps("yargs");
 
 project.synth();

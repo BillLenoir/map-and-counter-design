@@ -3,10 +3,6 @@
   "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
     "module": "es2022",
-    "types": [
-      "jest",
-      "node"
-    ],
     "moduleResolution": "bundler",
     "noEmit": true
   },
